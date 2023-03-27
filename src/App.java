@@ -19,10 +19,16 @@ public class App {
         List<Map<String, String>> listaDeFilmes = parser.parse(body);
         
        for (Map<String,String> filme : listaDeFilmes) {
-        System.out.println(filme.get("title"));
-        System.out.println(filme.get("image"));
-        System.out.println(filme.get("imDbRating"));
-        System.out.println();
+        System.out.println("\u001b[1m Título: \u001b[m" + filme.get("title"));
+        System.out.println("\u001b[1m Imagem: \u001b[m" + filme.get("image"));
+        System.out.println("\u001b[30;1m \u001b[43;1m Nota: \u001b[m " + filme.get("imDbRating"));
+
+        double classificacao = Double.parseDouble(filme.get("imDbRating"));
+        int numeroDeEstrelas = (int) classificacao;
+        for (int s = 1; s <= numeroDeEstrelas; s++) {
+            System.out.print("⭐");
+        }
+        System.out.println("\n");
        }
     }
 }
