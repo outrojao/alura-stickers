@@ -1,4 +1,7 @@
+import java.io.File;
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -18,17 +21,30 @@ public class App {
         var parser = new JsonParser();
         List<Map<String, String>> listaDeFilmes = parser.parse(body);
         
-       for (Map<String,String> filme : listaDeFilmes) {
-        System.out.println("\u001b[1m Título: \u001b[m" + filme.get("title"));
-        System.out.println("\u001b[1m Imagem: \u001b[m" + filme.get("image"));
-        System.out.println("\u001b[30;1m \u001b[43;1m Nota: \u001b[m " + filme.get("imDbRating"));
+        var geradora = new GeradoraDeFigurinhas();
+        var diretorio = new File("figurinhas/");
+        diretorio.mkdir();
+        for (Map<String,String> filme : listaDeFilmes) {
 
-        double classificacao = Double.parseDouble(filme.get("imDbRating"));
-        int numeroDeEstrelas = (int) classificacao;
-        for (int s = 1; s <= numeroDeEstrelas; s++) {
-            System.out.print("⭐");
+            String urlImagem = filme.get("image");
+            String nomeFilme = filme.get("title").replace(":", " -");
+
+            InputStream inputStream = new URL(urlImagem).openStream();
+            String nomeArquivo = "figurinhas/" + nomeFilme + ".png";
+
+            geradora.criar(inputStream, nomeArquivo);
+
+            System.out.println("\u001b[1m Título: \u001b[m" + filme.get("title"));
+            System.out.println();
+            // System.out.println("\u001b[1m Imagem: \u001b[m" + filme.get("image"));
+            // System.out.println("\u001b[30;1m \u001b[43;1m Nota: \u001b[m " + filme.get("imDbRating"));
+
+            // double classificacao = Double.parseDouble(filme.get("imDbRating"));
+            // int numeroDeEstrelas = (int) classificacao;
+            // for (int s = 1; s <= numeroDeEstrelas; s++) {
+            //     System.out.print("⭐");
+            // }
+            // System.out.println("\n");
         }
-        System.out.println("\n");
-       }
     }
 }
