@@ -17,8 +17,6 @@ import javax.imageio.ImageIO;
 public class GeradoraDeFigurinhas {
     public void criar(InputStream inputStream, String nomeDoArquivo) throws Exception{
         //? Lê a imagem
-        //InputStream inputStream = new FileInputStream(new File("entrada/filme.jpg"));
-        //InputStream inputStream = new URL("https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies_10.jpg").openStream();
         BufferedImage imagemOriginal = ImageIO.read(inputStream);
 
         //? Cria uma nova imagem em meória com transparência e tamanho novo
